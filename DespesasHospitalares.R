@@ -56,12 +56,25 @@ View(previsao)
 # Avaliando a performance do modelo
 summary(modelo)
 
+# Otimizando a performance do modelo
 
+# Adicionando uma variavel com o dobro do valor da idades
+despesas$idade2 <- despesas$idade ^2
 
+# Adicionando um indicador para BMI >= 30
+despesas$bmi30 <- ifelse(despesas$bmi >= 30, 1, 0)
+View(despesas)
 
+# Criando a versão 2 do modelo
+modelo_v2 <- lm(gastos ~ idade + idade2 + filhos + bmi + sexo +
+                  bmi30 * fumante + regiao, data = despesas)
 
+summary(modelo_v2)
 
-
+# Testando o modelo
+despesasteste <- read.csv("despesas-teste.csv")
+previsao_v2 <- predict(modelo, despesasteste)
+View(previsao_v2)
 
 
 
